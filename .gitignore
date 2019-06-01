@@ -1,3 +1,4 @@
 .vscode
 token.pickle
 credentials.json
+*.pyc
