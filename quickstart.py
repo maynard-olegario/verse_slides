@@ -1,6 +1,7 @@
 from __future__ import print_function
 import pickle
 import os.path
+import biblegateway
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
@@ -12,13 +13,26 @@ SCOPES = ['https://www.googleapis.com/auth/presentations.readonly']
 PRESENTATION_ID = '1EAYk18WDjIG-zp_0vLm3CsfQh_i8eXc67Jo2O9C6Vuc'
 
 def main():
-    get_verse_list('./verses.txt')
-    get_slides()
+    citations = get_citations('./verses.txt')
+    passages = get_passages(citations)
+    print(passages)
 
-def get_verse_list(filename):
+def get_citations(filename):
     f = open(filename, 'r')
+    citations = []
     for line in f:
-        print (line)
+        citations.append(line)
+    return citations
+
+def get_passages(citations):
+    default_version = 'NKJV'
+    INCLUDE_VERSE = True
+    INCLUDE_TITLE = False
+    passages = []
+    for c in citations:
+        p = biblegateway.get_passage(c, default_version, INCLUDE_VERSE, INCLUDE_TITLE)
+        passages.append(p)
+    return passages
 
 def get_slides():
     """Shows basic usage of the Slides API.
