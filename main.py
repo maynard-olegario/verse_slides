@@ -5,7 +5,8 @@ def main():
     citations = get_citations('./verses.txt')
     passages = get_passages(citations)
     print(passages)
-    # slides.get_slides()
+    for p in passages:
+        slides.add_slide(p['reference'] + ' ' + p['version'], p['text'])
 
 def get_citations(filename):
     f = open(filename, 'r')
