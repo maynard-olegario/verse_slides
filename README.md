@@ -10,8 +10,16 @@ Given a list of biblical verses, generate uniform slides for each verse.  The ge
    - **Note: this file will get overwritten every time the script is run.**
    - Manually make a copy of the file to avoid losing changes.
 
-## How to install
-## Steps to use
+## Prerequisites
+1. [Python 3.x+](https://www.python.org/downloads/)
+1. [Git](https://help.github.com/en/github/getting-started-with-github/set-up-git#setting-up-git)
+
+## Installation
+```
+git clone https://github.com/maynard-olegario/verse_slides.git
+```
+
+## How to use
 1. Add citations in the `verses.txt` file.  Enter the book name, then chapter, then verse, then version (defaults to NKJV if ommitted).  For example:
 ```
 book 1:2-5 KJV
