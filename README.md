@@ -33,3 +33,6 @@ book 1:2-5 KJV
 ```
 python ./main.py
 ```
+
+## Misc
+1. Additional slide [templates](https://www.slidescarnival.com/)
