@@ -11,12 +11,17 @@ Given a list of biblical verses, generate uniform slides for each verse.  The ge
    - Manually make a copy of the file to avoid losing changes.
 
 ## Prerequisites
-1. [Python 3.x+](https://www.python.org/downloads/)
 1. [Git](https://help.github.com/en/github/getting-started-with-github/set-up-git#setting-up-git)
+1. [PyEnv](https://github.com/pyenv/pyenv#installation)
+1. [Python 3.x+](https://www.python.org/downloads/)
+1. [Enable Google Slides API](https://developers.google.com/slides/quickstart/python)
+   - Download `credentials.json`
+   - On the first run only, a browser window will open to authenticate your google user
 
 ## Installation
 ```
 git clone https://github.com/maynard-olegario/verse_slides.git
+pip install -r requirements.txt
 ```
 
 ## How to use
