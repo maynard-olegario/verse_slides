@@ -1,12 +1,14 @@
 import json
-import urllib.request, urllib.error, urllib.parse
+import urllib.request
+import urllib.error
+import urllib.parse
 import re
 import configparser
 import logging
 from bs4 import BeautifulSoup
 import pickle
 
-#Importing configuration params
+# Importing configuration params
 config = configparser.ConfigParser()
 config.read('biblegateway_api.cfg')
 
@@ -15,8 +17,10 @@ defaults = config['DEFAULT']
 EMPTY = defaults['empty_message']
 default_version = defaults['version']
 
+
 def strip_markdown(string):
     return string.replace('*', '').replace('_', '').replace('`', '')
+
 
 """
 Search a specific passage (es. John 3:16)
@@ -28,6 +32,8 @@ params:
 output:
     dictionary(reference,version,text)
 """
+
+
 def get_passage(passage, version=default_version, numeration=True, title=True):
 
     def to_sup(text):
@@ -115,7 +121,8 @@ def get_passage(passage, version=default_version, numeration=True, title=True):
     for tag in soup(class_=WANTED):
         final_text += tag.text.strip()
 
-    return {'reference': reference, 'version': version, 'text': final_text.strip()}
+    return {'reference': reference, 'version': version,
+            'text': final_text.strip()}
 
 
 """
@@ -129,8 +136,11 @@ params:
 output:
     dictionary(reference,version,text)
 """
+
+
 def getChapterPassage(book, chapter, version=default_version, numeration=True, title=True):
     return get_passage(book+' '+chapter, version, numeration, title)
+
 
 """
 Search specific words (es. Fruit Spirit)
@@ -141,6 +151,7 @@ params:
 output:
     dictionary(reference,text)
 """
+
 
 def get_search_result(search, version=default_version, searchtype='ALL'):
 
@@ -179,8 +190,8 @@ def get_search_result(search, version=default_version, searchtype='ALL'):
 
         list_results[tag_title.string] = tag_text.string
 
-
     return list_results
+
 
 """
 Show verse of the day
@@ -189,13 +200,16 @@ params:
 output:
     dictionary(reference,version,text)
 """
-#Verse of the day multi version implementation
+# Verse of the day multi version implementation
+
+
 def getVotd(version=default_version):
 
     url = urls['votd']
     response = urllib.request.urlopen(url)
     data = json.loads(response.read().decode('utf-8'))
     return {'reference': data['votd']['reference'], 'version': version, 'text': get_passage(data['votd']['reference'], version=default_version, numeration=False, title=False)['text']}
+
 
 """
 Get Books List and chapter num for each book.
@@ -204,6 +218,8 @@ params:
 output:
     dictionary(book,chapter_num)
 """
+
+
 def getBookList(version=default_version):
 
     BG_URL = urls['booklist']
@@ -224,20 +240,21 @@ def getBookList(version=default_version):
         for tag in td.select("span"):
             tag.decompose()
 
-        #get Chapter num for each book
+        # get Chapter num for each book
         last_a = None
-        for last_a in td.findNext('td').findAll('a'): pass
+        for last_a in td.findNext('td').findAll('a'):
+            pass
         if last_a:
-            books[td.getText()] =last_a.text
-
+            books[td.getText()] = last_a.text
 
     return books
-
 
 
 """
 Update version file fetching from biblegateway
 """
+
+
 def updateVersionsList():
 
     url = urls['update_version']
@@ -253,29 +270,31 @@ def updateVersionsList():
 
     eng = False
     for opt in BeautifulSoup(html, 'lxml').find('select').find_all('option'):
-        #Add -Bible string to English Bible version
+        # Add -Bible string to English Bible version
         if opt.has_attr('class') and opt['class'][0] == 'lang':
 
-                if opt['value']=='KJ21':
-                    eng=True
+            if opt['value'] == 'KJ21':
+                eng = True
                 else:
-                    eng=False
+                eng = False
 
         if not opt.has_attr('class'):
             text = opt.text.replace(' ', '-').replace('(', '').replace(')', '')
             if eng:
                 text += '-Bible'
 
-            versions[opt['value']]= text
-
+            versions[opt['value']] = text
 
     with open(defaults['version_file'], "wb") as fp:
         pickle.dump(versions, fp)
 
+
 """
 Get Version description useful to get booklist
 """
-#Get Version description for Books
+# Get Version description for Books
+
+
 def getVersionName(version=default_version):
 
     with open(defaults['version_file'], 'rb') as fp:
