@@ -56,9 +56,9 @@ def get_passage(passage, version=default_version, numeration=True, title=True):
     url = BG_URL.format(search, version)
 
     try:
-      result = urllib.request.urlopen(url)
+        result = urllib.request.urlopen(url)
     except urllib.error.URLError as e:
-      logging.warning('Error fetching passage:\n' + str(e))
+        logging.warning('Error fetching passage:\n' + str(e))
 
     html = result.read()
     soup = BeautifulSoup(html, 'lxml').select_one('.passage-text')
@@ -74,8 +74,7 @@ def get_passage(passage, version=default_version, numeration=True, title=True):
     if not title:
         UNWANTED += ', h1, h2, h3, h4, h5, h6'
 
-
-    title = soup.select_one('.passage-display-bcv').text
+    title = passage
     reference = strip_markdown(title.strip())
 
     for tag in soup.select(UNWANTED):
@@ -162,9 +161,9 @@ def get_search_result(search, version=default_version, searchtype='ALL'):
     url = BG_URL.format(search, version, searchtype)
 
     try:
-      result = urllib.request.urlopen(url)
+        result = urllib.request.urlopen(url)
     except urllib.error.URLError as e:
-      logging.warning('Error fetching passage:\n' + str(e))
+        logging.warning('Error fetching passage:\n' + str(e))
 
     html = result.read()
     soup = BeautifulSoup(html, 'lxml').select_one('.search-result-list')
@@ -275,7 +274,7 @@ def updateVersionsList():
 
             if opt['value'] == 'KJ21':
                 eng = True
-                else:
+            else:
                 eng = False
 
         if not opt.has_attr('class'):
