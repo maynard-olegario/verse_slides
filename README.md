@@ -21,7 +21,7 @@ Given a list of biblical verses, generate uniform slides for each verse.  The ge
 ## Installation
 ```
 git clone https://github.com/maynard-olegario/verse_slides.git
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 ## How to use
@@ -31,7 +31,7 @@ book 1:2-5 KJV
 ```
 1. Run the python script
 ```
-python ./main.py
+python3 ./main.py
 ```
 
 ## Misc
