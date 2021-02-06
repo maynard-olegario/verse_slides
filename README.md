@@ -31,8 +31,16 @@ book 1:2-5 KJV
 ```
 1. Run the python script
 ```
-python3 ./main.py
+./main.py
 ```
+### Manual steps
+1. Slides match lesson outline
+1. Type passages that encountered error when retrieving (invalid citation, book, etc.)
+1. Spread long passages across multiple slides
+1. Superscript verse numbers
+1. Remove extra characters (e.g. "(A)", "(B)", etc.)
+1. Remove extra # characters around verse numbers at beginning of chapter
+1. Update template if needed
 
 ## Misc
 1. Additional slide [templates](https://www.slidescarnival.com/)
