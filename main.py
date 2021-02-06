@@ -1,3 +1,4 @@
+#!/usr/local/bin/python3
 import biblegateway
 import slides
 import pprint
@@ -51,6 +52,14 @@ def get_passage(citation, version='NKJV'):
         version = 'NKJV'
     elif version == 'TEV':
         version = 'GNT'
+    elif version == 'GNB':
+        version = 'GNT'
+    elif version == 'God\'s WORD':
+        version = 'GW'
+    elif version == 'Easy to Read':
+        version = 'ERV'
+    elif version == 'ETRV':
+        version = 'ERV'
 
     passage = biblegateway.get_passage(citation, version, INCLUDE_VERSE, INCLUDE_TITLE)
     if passage == 'empty':
