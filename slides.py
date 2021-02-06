@@ -88,12 +88,16 @@ def add_slide(citation='default citation text', passage='default passage text'):
       {
         "updateTextStyle": {
           "objectId": titleId,
-          "fields": "bold",
+          "fields": "bold,fontSize",
           "textRange": {
             "type": "ALL"
           },
           "style": {
-            "bold": True
+            "bold": True,
+            "fontSize": {
+              "magnitude": 16,
+              "unit": "PT"
+            }
           }
         }
       },
@@ -107,7 +111,7 @@ def add_slide(citation='default citation text', passage='default passage text'):
           "style": {
             "fontFamily": "Arial",
             "fontSize": {
-              "magnitude": 30,
+              "magnitude": 20,
               "unit": "PT"
             }
           }
