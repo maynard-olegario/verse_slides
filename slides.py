@@ -132,8 +132,6 @@ def add_slide(citation='default citation', passage='default passage'):
     response = service.presentations() \
         .batchUpdate(presentationId=PRESENTATION_ID, body=body).execute()
     create_slide_response = response.get('replies')[0].get('createSlide')
-    print('Created slide with ID: {0}'.format(
-        create_slide_response.get('objectId')))
 
 
 def get_slides():

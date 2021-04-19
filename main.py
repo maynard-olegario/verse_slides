@@ -13,18 +13,24 @@ def main():
     pp.pprint(citations)
 
     passages = []
+    print('Getting passages ', end='', flush=True)
     for c in citations:
+        print('.', end='', flush=True)
         p = get_passage(c['citation'], c['version'])
         passages.append(p)
+    print('done', flush=True)
 
     print('***** AFTER get_passage() *****')
     pp.pprint(passages)
 
+    print('Creating slides ', end='', flush=True)
     for p in passages:
+        print('.', end='', flush=True)
         # print('***********')
         # print(p)
         slides.add_slide(str(p['reference']) + ' ' +
                          str(p['version']), p['text'])
+    print('done', flush=True)
 
 
 def get_citations(filename):
