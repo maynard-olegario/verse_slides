@@ -35,7 +35,7 @@ def get_citations(filename):
         line = line.strip()
 
         # get version from end of citation
-        matchObj = re.search(r'(.*\d+\s*:.*\d+) *([a-zA-Z]+)$', line, re.I)
+        matchObj = re.search(r'(.*\d+\s*:.*\d+\(*\D*\)*) +([a-zA-Z]+)$', line, re.I)
         if matchObj:
             book_chap_verse = matchObj.group(1)
             version = matchObj.group(2)
@@ -63,12 +63,38 @@ def get_passage(citation, version='NKJV'):
     elif version == 'ETRV':
         version = 'ERV'
 
+    passage = get_common_passages(citation, version)
+    if passage != 'empty':
+        return passage
+
     passage = biblegateway.get_passage(
         citation, version, INCLUDE_VERSE, INCLUDE_TITLE)
     if passage == 'empty':
         passage = {'reference': citation, 'version': version,
                    'text': 'Error encountered fetching citation'}
     return passage
+
+
+def get_common_passages(citation, version):
+    # hardcode common verses not easily found online
+
+    # print('citation.lower()=' + citation.lower())
+    # print('version.lower()=' + version.lower())
+
+    if citation.lower() == 'acts 20:28' and version.lower() == 'lamsa':
+        verse_text = '²⁸Take heed therefore to yourselves and to all the flock, over which the Holy Spirit has appointed you overseers, to feed the church of Christ which he has purchased with his blood.'
+    elif citation.lower() == 'john 10:9(a)' and version.lower() == 'reb':
+        verse_text = '⁹I am the door; anyone who comes into the fold through me shall be safe. …'
+    else:
+        verse_text = ''
+
+    if not verse_text:
+        return 'empty'
+    else:
+        passage = {'reference': citation,
+                   'version': version,
+                   'text': verse_text}
+        return passage
 
 
 if __name__ == '__main__':
