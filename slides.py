@@ -95,7 +95,7 @@ def add_slide(citation='default citation text', passage='default passage text'):
           "style": {
             "bold": True,
             "fontSize": {
-              "magnitude": 16,
+              "magnitude": 18,
               "unit": "PT"
             }
           }
@@ -111,7 +111,7 @@ def add_slide(citation='default citation text', passage='default passage text'):
           "style": {
             "fontFamily": "Arial",
             "fontSize": {
-              "magnitude": 20,
+              "magnitude": 18,
               "unit": "PT"
             }
           }
