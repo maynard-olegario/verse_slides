@@ -54,7 +54,7 @@ def get_citations(filename):
     return citations
 
 
-def get_passage(citation, version='NKJV'):
+def get_passage(citation, version):
     INCLUDE_VERSE = True
     INCLUDE_TITLE = False
     # print('citation=' + str(citation) + ' :: version=' + str(version))
@@ -71,6 +71,9 @@ def get_passage(citation, version='NKJV'):
         version = 'ERV'
     elif version == 'LB':
         version = 'TLB'
+
+    if not version:
+        version = 'NKJV'
 
     passage = get_common_passages(citation, version)
     if passage != 'empty':
