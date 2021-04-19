@@ -69,6 +69,8 @@ def get_passage(citation, version='NKJV'):
         version = 'ERV'
     elif version == 'ETRV':
         version = 'ERV'
+    elif version == 'LB':
+        version = 'TLB'
 
     passage = get_common_passages(citation, version)
     if passage != 'empty':
