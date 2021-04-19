@@ -41,7 +41,8 @@ def get_citations(filename):
         line = line.strip()
 
         # get version from end of citation
-        matchObj = re.search(r'(.*\d+\s*:.*\d+\(*\D*\)*) +([a-zA-Z]+)$', line, re.I)
+        matchObj = re.search(
+            r'(.*\d+\s*:.*\d+\(*\D*\)*) +([a-zA-Z]+)$', line, re.I)
         if matchObj:
             book_chap_verse = matchObj.group(1)
             version = matchObj.group(2)
