@@ -14,6 +14,7 @@ SCOPES = ['https://www.googleapis.com/auth/presentations']
 # todo: dynamic presentation_id
 PRESENTATION_ID = '12XDv6JAdduXgoTneZdQ9tawfGouTPQLExTUEb3RUurU'
 
+
 def auth():
     creds = None
     # The file token.pickle stores the user's access and refresh tokens, and is
@@ -35,11 +36,13 @@ def auth():
             pickle.dump(creds, token)
     return creds
 
-def add_slide(citation='default citation text', passage='default passage text'):
+
+def add_slide(citation='default citation', passage='default passage'):
     service = build('slides', 'v1', credentials=auth())
 
     # Call the Slides API
-    presentation = service.presentations().get(presentationId=PRESENTATION_ID).execute()
+    presentation = service.presentations().get(
+        presentationId=PRESENTATION_ID).execute()
     slides = presentation.get('slides')
 
     # pp = pprint.PrettyPrinter(indent=2)
@@ -49,74 +52,74 @@ def add_slide(citation='default citation text', passage='default passage text'):
     titleId = uuid.uuid4().hex
     bodyId = uuid.uuid4().hex
     requests = [
-      {
-        "createSlide": {
-          # "objectId": pageId,
-          "slideLayoutReference": {
-            "predefinedLayout": "TITLE_AND_BODY"
-          },
-          "placeholderIdMappings": [
-            {
-              "layoutPlaceholder": {
-                "type": "TITLE",
-                "index": 0
-              },
-              "objectId": titleId,
-            },
-            {
-              "layoutPlaceholder": {
-                "type": "BODY",
-                "index": 0,
-              },
-              "objectId": bodyId,
-            },
-          ],
-        }
-      },
-      {
-        "insertText": {
-          "objectId": titleId,
-          "text": citation,
-        }
-      },
-      {
-        "insertText": {
-          "objectId": bodyId,
-          "text": passage,
-        }
-      },
-      {
-        "updateTextStyle": {
-          "objectId": titleId,
-          "fields": "bold,fontSize",
-          "textRange": {
-            "type": "ALL"
-          },
-          "style": {
-            "bold": True,
-            "fontSize": {
-              "magnitude": 18,
-              "unit": "PT"
+        {
+            "createSlide": {
+                # "objectId": pageId,
+                "slideLayoutReference": {
+                    "predefinedLayout": "TITLE_AND_BODY"
+                },
+                "placeholderIdMappings": [
+                    {
+                        "layoutPlaceholder": {
+                            "type": "TITLE",
+                            "index": 0
+                        },
+                        "objectId": titleId,
+                    },
+                    {
+                        "layoutPlaceholder": {
+                            "type": "BODY",
+                            "index": 0,
+                        },
+                        "objectId": bodyId,
+                    },
+                ],
             }
-          }
-        }
-      },
-      {
-        "updateTextStyle": {
-          "objectId": bodyId,
-          "fields": "fontFamily,fontSize",
-          "textRange": {
-            "type": "ALL"
-          },
-          "style": {
-            "fontFamily": "Arial",
-            "fontSize": {
-              "magnitude": 18,
-              "unit": "PT"
+        },
+        {
+            "insertText": {
+                "objectId": titleId,
+                "text": citation,
             }
-          }
+        },
+        {
+            "insertText": {
+                "objectId": bodyId,
+                "text": passage,
+            }
+        },
+        {
+            "updateTextStyle": {
+                "objectId": titleId,
+                "fields": "bold,fontSize",
+                "textRange": {
+                    "type": "ALL"
+                },
+                "style": {
+                    "bold": True,
+                    "fontSize": {
+                        "magnitude": 18,
+                        "unit": "PT"
+                    }
+                }
+            }
+        },
+        {
+            "updateTextStyle": {
+                "objectId": bodyId,
+                "fields": "fontFamily,fontSize",
+                "textRange": {
+                    "type": "ALL"
+                },
+                "style": {
+                    "fontFamily": "Arial",
+                    "fontSize": {
+                        "magnitude": 18,
+                        "unit": "PT"
+                    }
+                }
+            }
         }
-      }
     ]
 
     # If you wish to populate the slide with elements,
@@ -131,6 +134,7 @@ def add_slide(citation='default citation text', passage='default passage text'):
     create_slide_response = response.get('replies')[0].get('createSlide')
     print('Created slide with ID: {0}'.format(
         create_slide_response.get('objectId')))
+
 
 def get_slides():
     service = build('slides', 'v1', credentials=auth())
