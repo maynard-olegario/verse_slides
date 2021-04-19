@@ -48,9 +48,7 @@ def get_passage(citation, version='NKJV'):
     INCLUDE_TITLE = False
     # print('citation=' + str(citation) + ' :: version=' + str(version))
 
-    if version == '':
-        version = 'NKJV'
-    elif version == 'TEV':
+    if version == 'TEV':
         version = 'GNT'
     elif version == 'GNB':
         version = 'GNT'
@@ -63,7 +61,7 @@ def get_passage(citation, version='NKJV'):
 
     passage = biblegateway.get_passage(citation, version, INCLUDE_VERSE, INCLUDE_TITLE)
     if passage == 'empty':
-        passage = {'reference': citation, 'version': '', 'text': 'Error encountered fetching citation'}
+        passage = {'reference': citation, 'version': version, 'text': 'Error encountered fetching citation'}
     return passage
 
 if __name__ == '__main__':
